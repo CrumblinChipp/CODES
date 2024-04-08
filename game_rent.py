@@ -111,6 +111,7 @@ def  game_choice():
                 if games[shopping]['copy'] >= item_amount:
                     cart[shopping] = [games[shopping]['price'],item_amount]
                     wallet = wallet - (cart[shopping][0] * cart[shopping][1])
+                    print("===========================")
                     print(f"Added {item_amount} {shopping} to the cart")
                     print(cart)
                     add_choice= int(input("[1]Yes\n[2]No\nWould you like to add more?: "))
@@ -162,9 +163,34 @@ def purchase():
             cart = {}
     else:
         print("Transaction cancelled")
-       
-def main_menu():
+
+def return_game():
     global logged_in
+    while True:
+        try:
+            if 'rented' in accounts[logged_in].keys():
+                print(f"Rented games: {accounts[logged_in]['rented']}")
+                game_to_return = input("Enter the name of the game you want to return: ")
+                if game_to_return in accounts[logged_in]['rented']:
+                    accounts[logged_in]['rented'].remove(game_to_return)
+                    games[game_to_return]['copy'] += 1
+                    print(f"{game_to_return} has been returned.")
+                    print(f"Rented games: {accounts[logged_in]['rented']}")
+                    print("Press Enter to return to the main menu..")
+                    input()
+                    os.system('cls')
+                    main_menu()
+                else:
+                    print(f"{game_to_return} is not currently rented by {logged_in}.")
+            else:
+                print(f"{logged_in} has no rented games.")
+            break
+        except ValueError:
+            print("Wrong input")
+
+
+def main_menu():
+    global logged_in, wallet
     print("===========================")    
     print(f"Welcome {logged_in}")
     print(f"Rented: {accounts[logged_in]['rented']}")
@@ -180,15 +206,17 @@ def main_menu():
                 balance()
             elif main_choice == 2:
                 os.system('cls')
-                print("not yet finished")#===================================================================================================
-            elif main_choice == 3:
-                accounts[global_username][1] = global_balance
+                return_game()
+            elif main_choice ==3:
+                print("not yet done")#---------------------------------------------------------------------------
+            elif main_choice == 4:
                 os.system('cls')
+                logged_in = None
+                wallet = None
                 print("=============================")
                 print("---Thank you and good bye---")
                 print("=============================")
-                global_username = None
-                global_balance = None
+
                 exit()
             else:
                 print("Please enter 1-3 only")
