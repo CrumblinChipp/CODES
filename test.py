@@ -26,8 +26,8 @@ while True:
     print("please enter the 'Title' of the book you want to Return")
     search_item = input("ENTER: ")
 
-    if search_item in [book.lower() for book in accounts[logged_in]["books_burrowed"]]:
-        choice = input(f"Are you sure you want to return{search_item}(Y/N): ").lower()
+    if search_item in accounts[logged_in]['books_burrowed']:
+        choice = input(f"Are you sure you want to return {search_item}(Y/N): ").lower()
         if choice == 'y':
             accounts[logged_in]['books_burrowed'].remove(search_item)
             books[search_item]['status'] = True
