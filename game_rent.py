@@ -162,11 +162,7 @@ def purchase():
             cart = {}
     else:
         print("Transaction cancelled")
-
-
-
-
-           
+       
 def main_menu():
     global logged_in
     print("===========================")    
