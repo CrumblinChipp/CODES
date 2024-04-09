@@ -18,26 +18,51 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
         "Steel Designer Manual":{'Category': "Engineering Guide", 'author': "Buick Davidson", 'isbn':"978-1-1192-4986-3", 'status': True}
 }
 
-logged_in = 'student1'
-
-while True: 
-    print("===========================================")
-    print(accounts[logged_in]['books_burrowed'])
-    print("please enter the 'Title' of the book you want to Return")
-    search_item = input("ENTER: ")
-
-    if search_item in accounts[logged_in]['books_burrowed']:
-        choice = input(f"Are you sure you want to return {search_item}(Y/N): ").lower()
-        if choice == 'y':
-            accounts[logged_in]['books_burrowed'].remove(search_item)
-            books[search_item]['status'] = True
-            print(accounts[logged_in]['books_burrowed'])
-            print(f"{search_item} Successfully Returned..")
+last_book = {}
+book_parts = ['Category', 'author', 'isbn']
+print("===========================================")
+print("Enter the ISBN or Title of the Book you wan to Edit")
+search_item = input("ENTER: ")
+for book_key in books:
+    if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
+        print("===========================================")
+        print("Title: ", book_key)
+        print("Category: ", books[book_key]['Category'])
+        print("Author: ", books[book_key]["author"])
+        print("ISBN: ", books[book_key]["isbn"])
+        if books[book_key]["status"] == True:
+            print("Status: Available")
+        else:
+            print("Status: Not Avaialable")
+        try:
+            print("===========================================")
+            print("[1]Category\n[2]Author\n[3]ISBN")
+            edit_item = int(input("Enter the part the you want to edit on this book: "))
+            if edit_item >= 1 and edit_item <= 3:
+                edit_item -=1
+                edit_item = book_parts[edit_item]
+                change_item = input(f"Enter the new {edit_item}: ")
+        except ValueError:
+            print("Enter only from 1-3")
+        confirm = input("Are you sure you want to edit this books(Y/N)?").lower()
+        if confirm == 'y':
+            books[book_key][edit_item] = change_item
+            print("===========================================")
+            print("Title: ", book_key)
+            print("Category: ", books[book_key]['Category'])
+            print("Author: ", books[book_key]["author"])
+            print("ISBN: ", books[book_key]["isbn"])
+            if books[book_key]["status"] == True:
+                print("Status: Available")
+            else:
+                print("Status: Not Avaialable")
             print("Press ENTER to return..")
             input()
-        elif choice == 'n':
-            print("goods")
+            break
+        elif confirm == 'n':
+            break
         else:
             print("something went wrong")
-    else:
-        print("The book wasnt in your burrowed list")
+
+    
+    
