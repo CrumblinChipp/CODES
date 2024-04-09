@@ -21,6 +21,7 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
 
 logged_in = 'student1'
 role_key = None
+last_book = {None: None}  # last book borrowed
 
 def role(): # ALL FUNCTION ACCOUNTED FOR
     global logged_in, role_key
@@ -89,7 +90,8 @@ def admin_menu():
             os.system('cls')
             browse_menu()
         elif admin_choice == 'b':
-            print("continue to Edit option")
+            os.system('cls')
+            edit_books()
         elif admin_choice == 'c':
             print("continue to Add option")
         elif admin_choice == 'd':
@@ -281,6 +283,7 @@ def burrow_book(): # ALL FUNCTION ACCOUNTED FOR
                         os.system('cls')
                         return student_menu()
                     elif confirm == 'n':
+                        os.system('cls')
                         return student_menu()
                     else:
                         print("something went wrong")
@@ -306,13 +309,14 @@ def return_book(): # ALL FUNCTION ACCOUNTED FOR
                 os.system('cls')
                 return student_menu()
             elif choice == 'n':
-                print("goods")
+                os.system('cls')
+                student_menu()
             else:
                 print("something went wrong")
         else:
             print("The book wasnt in your burrowed list")
 
-def edit_books():
+def edit_books(): # ALL FUNCTION ACCOUNTED FOR
     book_parts = ['Category', 'author', 'isbn']
     print("===========================================")
     print("Enter the ISBN or Title of the Book you wan to Edit")
@@ -328,20 +332,19 @@ def edit_books():
                 print("Status: Available")
             else:
                 print("Status: Not Avaialable")
-    while True:
-        try:
-            print("===========================================")
-            print("[1]Category\n[2]Author\n[3]ISBN")
-            edit_item = int(input("Enter the part the you want to edit on this book: "))
-            if edit_item >= 1 and edit_item <= 3:
-                edit_item = book_parts[edit_item - 1]
-                change_item = input(f"Enter the new {edit_item}: ")
-        except ValueError:
-            print("Enter only from 1-3")
-        confirm = input("Are you sure you want to edit this books(Y/N)?").lower()
-        if confirm == 'y':
-            books[book_key][edit_item] = change_item
-            for book_key in books:
+            try:
+                print("===========================================")
+                print("[1]Category\n[2]Author\n[3]ISBN")
+                edit_item = int(input("Enter the part the you want to edit on this book: "))
+                if edit_item >= 1 and edit_item <= 3:
+                    edit_item -=1
+                    edit_item = book_parts[edit_item]
+                    change_item = input(f"Enter the new {edit_item}: ")
+            except ValueError:
+                print("Enter only from 1-3")
+            confirm = input("Are you sure you want to edit this books(Y/N)?").lower()
+            if confirm == 'y':
+                books[book_key][edit_item] = change_item
                 print("===========================================")
                 print("Title: ", book_key)
                 print("Category: ", books[book_key]['Category'])
@@ -352,14 +355,32 @@ def edit_books():
                 else:
                     print("Status: Not Avaialable")
                 print("Press ENTER to return..")
-            input()
-            os.system('cls')
-            return admin_menu()
-        elif confirm == 'n':
-            return admin_menu()
-        else:
-            print("something went wrong")
+                input()
+                os.system('cls')
+                return admin_menu()
+            elif confirm == 'n':
+                os.system('cls')
+                admin_menu()
+            else:
+                print("something went wrong")
 
-
-
-edit_books()
+def add_book():
+    print("===========================================")
+    title = input("Enter Title of Book: ")
+    category = input("Enter Category: ")
+    author = input("Enter Author Name: ")
+    isbn = input ("Enter ISBN Number: ")
+    print("Title: ", title)
+    print("Category: ", category)
+    print("Author: ", author)
+    print("ISBN: ", isbn)
+    print("===========================================")
+    confirm = input("Are all infomration correct(Y/N): ").lower()
+    if confirm == 'y':
+        print('not yet done')
+        os.system('cls')
+        return student_menu()
+    elif confirm == 'n':
+        print("goods")
+    else:
+        print("something went wrong")
