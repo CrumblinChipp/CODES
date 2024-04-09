@@ -81,11 +81,11 @@ def role(): # ALL FUNCTION ACCOUNTED FOR
             print("input only the choices Below.")
 
 def admin_menu():
-    print("\t===========================================")
-    print("\t\t\tWelcome Librarian~")
+    print("===========================================")
+    print("Welcome Librarian~")
     while True: 
-        print("\t===========================================")
-        admin_choice = input("\t\t\t[A]Browse Books\n\t\t\t[B]Edit Book\n\t\t\t[C]Add Book\n\t\t\t[D]Remove Book\n\t\t\t[E]Exit\n\t\t\tPick your action: ").lower()
+        print("===========================================")
+        admin_choice = input("[A]Browse Books\n[B]Edit Book\n[C]Add Book\n[D]Remove Book\n[E]Exit\nPick your action: ").lower()
         if admin_choice == 'a':
             os.system('cls')
             browse_menu()
@@ -93,19 +93,24 @@ def admin_menu():
             os.system('cls')
             edit_books()
         elif admin_choice == 'c':
-            print("continue to Add option")
+            os.system('cls')
+            add_book()
         elif admin_choice == 'd':
-            print("continue to Remove option")
+            os.system('cls')
+            delete_book()
         elif admin_choice == 'e':
-            print("continue to Exit option")
+            print("===========================================")
+            print("Thank you for using our Library System.\nHave a Good Day~")
+            print("===========================================")
+            exit()
         else: 
             os.system('cls')
-            print("\t\tinput only the choices Below.")
+            print("Input only the choices Below.")
 
 def student_menu():
     global logged_in
     print("===========================================")
-    print("\t\tWelcome Student1~")
+    print(f"Welcome {logged_in}~")
     if accounts['student1']['books_burrowed'] != None:
         print(accounts['student1']['books_burrowed'])
     while True: 
@@ -121,6 +126,9 @@ def student_menu():
             os.system('cls')
             return_book()
         elif admin_choice == 'd':
+            print("===========================================")
+            print("Thank you for using our Library System.\nHave a Good Day~")
+            print("===========================================")
             exit()
         else: 
             os.system('cls')
@@ -238,6 +246,9 @@ def search_engine(): # ALL FUNCTION ACCOUNTED FOR
                 print("Status: Not Avaialable")
         else:
             print("We do not have this book..")
+            print("Press Enter to continue Searching...")
+            os.system('cls')
+            search_engine()
     if role_key == 'admin':
         print("===========================================")
         print("Press ENTER to Return to the Main menu")
@@ -364,7 +375,7 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
             else:
                 print("something went wrong")
 
-def add_book():
+def add_book(): # ALL FUNCTION ACCOUNTED FOR
     print("===========================================")
     title = input("Enter Title of Book: ")
     category = input("Enter Category: ")
@@ -377,10 +388,45 @@ def add_book():
     print("===========================================")
     confirm = input("Are all infomration correct(Y/N): ").lower()
     if confirm == 'y':
-        print('not yet done')
+        books.update({title:{'Category': category, 'author': author, 'isbn': isbn, 'status': True }})
+        print("Book successfully added..")
+        print("Press ENTER to return to the main menu..")
+        input()
         os.system('cls')
-        return student_menu()
+        admin_menu()
     elif confirm == 'n':
-        print("goods")
+        admin_menu()
     else:
         print("something went wrong")
+
+def delete_book(): # ALL FUNCTION ACCOUNTED FOR
+    print("===========================================")
+    print("Enter the ISBN or Title of the Book you wan to Remove")
+    search_item = input("ENTER: ")
+    for book_key in books:
+        if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
+            print("===========================================")
+            print("Title: ", book_key)
+            print("Category: ", books[book_key]['Category'])
+            print("Author: ", books[book_key]["author"])
+            print("ISBN: ", books[book_key]["isbn"])
+            if books[book_key]["status"] == True:
+                print("Status: Available")
+            else:
+                print("Status: Not Avaialable")
+        print("===========================================")
+        confirm = input("Are you sure you want to Remove this books(Y/N)?").lower()
+        if confirm == 'y':
+            del books[book_key]
+            print("The book has been removed from our library")
+            print("Press ENTER to return..")
+            input()
+            os.system('cls')
+            return admin_menu()
+        elif confirm == 'n':
+            os.system('cls')
+            admin_menu()
+        else:
+            print("something went wrong")
+            
+        
