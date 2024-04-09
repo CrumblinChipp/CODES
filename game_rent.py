@@ -188,7 +188,6 @@ def return_game():
         except ValueError:
             print("Wrong input")
 
-
 def main_menu():
     global logged_in, wallet
     print("===========================")    
