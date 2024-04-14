@@ -2,6 +2,7 @@ import os
 accounts = {'librarian': {'password': 'librarian_admin','role': 'admin', 'books_burrowed': []},
             'student1': {'password': 'student1_pass', 'role': "student", 'books_burrowed': ['Biochemistry']}}
 
+
 books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", 'isbn':"123456", 'status': True},
         "Data Science Basics": {'Category':"Data Science", 'author':"Jane Smith", 'isbn':"789012", 'status': True},
         "A+ Guide to IT Technical Support": {'Category':"Programming", 'author':"", 'isbn':"1-305-26643-9", 'status': True},
@@ -11,7 +12,7 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
         "Advanced Engineering Mathematics": {'Category': "Engineering Guide", 'author':"Peter v. O'neil", 'isbn': "1-305-63515-9", 'status': True},
         "Beginning DirectX": {'Category': "Programming", 'author': "Wendy Jones", 'isbn':"1-4354-5895-8", 'status': True},
         "Using Information Technology":{'Category': "Programming", 'author':"Williams Sawyer", 'isbn':"978-1-259-25566-3", 'status': True},
-        "Discrete Mathematics": {'Category': "Mathematics", 'author': "", 'isbn':"978-1-68095-575-0", 'status': True}, 
+        "Discrete Mathematics": {'Category': "Mathematics", 'author': "", 'isbn':"978-1-68095-575-0", 'status': True},
         "Discrete Mathematics and It's Application": {'Category': "Mathematics", 'author': "", 'isbn': "978-1307428674", 'status': True},
         "Java Programming": {'Category': "Programming", 'author':"Bart Baesens", 'isbn':"978-1-118-73949", 'status': True},
         "Biochemistry":{'Category': "Science", 'author':"Stephen Stoker", 'isbn':"978-971-98-0878-7", 'status': False},
@@ -19,15 +20,16 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
         "Steel Designer Manual":{'Category': "Engineering Guide", 'author': "Buick Davidson", 'isbn':"978-1-1192-4986-3", 'status': True}
 }
 
-logged_in = 'student1'
+
+logged_in = None
 role_key = None
-last_book = {None: None}  # last book borrowed
+
 
 def role(): # ALL FUNCTION ACCOUNTED FOR
     global logged_in, role_key
     while True:
-        print("\t===========================================")
-        role_choice = input("\t\t\t[A]Librarian\n\t\t\t[B]Student\n\t\t\tPick your role[A or B]: ").lower()
+        print("===========================================")
+        role_choice = input("[A]Librarian\n[B]Student\nPick your role[A or B]: ").lower()
         if role_choice == 'a':
             while True:
                 print("===========================================")
@@ -48,7 +50,7 @@ def role(): # ALL FUNCTION ACCOUNTED FOR
                 elif username == "":
                     os.system('cls')
                     return role()
-                else: 
+                else:
                     os.system('cls')
                     print("\t\tWRONG USERNAME")
         elif role_choice =='b':
@@ -68,22 +70,23 @@ def role(): # ALL FUNCTION ACCOUNTED FOR
                         break
                     else:
                         os.system('cls')
-                        print("\t\tWRONG PASSWORD")
+                        print("WRONG PASSWORD")
                 elif username == "":
                     os.system('cls')
                     return role()
-                else: 
+                else:
                     os.system('cls')
-                    print("\t\tWRONG USERNAME")
+                    print("WRONG USERNAME")
 
-        else: 
+
+        else:
             os.system('cls')
             print("input only the choices Below.")
 
 def admin_menu():
     print("===========================================")
     print("Welcome Librarian~")
-    while True: 
+    while True:
         print("===========================================")
         admin_choice = input("[A]Browse Books\n[B]Edit Book\n[C]Add Book\n[D]Remove Book\n[E]Exit\nPick your action: ").lower()
         if admin_choice == 'a':
@@ -100,10 +103,10 @@ def admin_menu():
             delete_book()
         elif admin_choice == 'e':
             print("===========================================")
-            print("Thank you for using our Library System.\nHave a Good Day~")
+            print("Thank you for using our Library System.\n\tHave a Good Day~")
             print("===========================================")
             exit()
-        else: 
+        else:
             os.system('cls')
             print("Input only the choices Below.")
 
@@ -113,7 +116,7 @@ def student_menu():
     print(f"Welcome {logged_in}~")
     if accounts['student1']['books_burrowed'] != None:
         print(accounts['student1']['books_burrowed'])
-    while True: 
+    while True:
         print("===========================================")
         admin_choice = input("[A]Browse Books\n[B]Burrow Book\n[C]Return Book\n[D]Exit\nPick your action: ").lower()
         if admin_choice == 'a':
@@ -127,18 +130,18 @@ def student_menu():
             return_book()
         elif admin_choice == 'd':
             print("===========================================")
-            print("Thank you for using our Library System.\nHave a Good Day~")
+            print("Thank you for using our Library System.\n\tHave a Good Day~")
             print("===========================================")
             exit()
-        else: 
+        else:
             os.system('cls')
-            print("\t\tinput only the choices Below.")
-    
+            print("Input only the choices Below.")
+   
 def browse_menu(): # ALL FUNCTION ACCOUNTED FOR
     while True:
         print("===========================================")
         print("[A]Display All Books\n[B]Browse by Category\n[C]Search ")
-        browse_choice = input("Enter your action: ").lower()
+        browse_choice = input("Enter your action(leave blank to return to the Main Menu): ").lower()
         if browse_choice == "":
             return
         elif browse_choice == 'a':
@@ -152,7 +155,7 @@ def browse_menu(): # ALL FUNCTION ACCOUNTED FOR
             search_engine()
         else:
             print("Enter only on the choices below")
-        
+       
 def display_all(): # ALL FUNCTION ACCOUNTED FOR
     global role_key
     book_title = list(books.keys())
@@ -162,10 +165,8 @@ def display_all(): # ALL FUNCTION ACCOUNTED FOR
         print("Category: ", books[title]["Category"])
         print("Author: ", books[title]["author"])
         print("ISBN: ", books[title]["isbn"])
-        if books[title]["status"] == True:
-            print("Status: Available")
-        else:
-            print("Status: Not Avaialable")
+        print ("Status: Available" if books[title]["status"] == True else "Status: Not Available")
+
 
     if role_key == 'admin':
         print("===========================================")
@@ -174,24 +175,24 @@ def display_all(): # ALL FUNCTION ACCOUNTED FOR
         os.system('cls')
         return
     elif role_key != 'admin':
-        while True: 
+        while True:
             print("===========================================")
-            admin_choice = input("[A]Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
-            if admin_choice == 'a':
+            choice = input("[A]Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
+            if choice == 'a':
                 burrow_book()
-            elif admin_choice == 'b':
+            elif choice == 'b':
                 return student_menu()
-            else: 
+            else:
                 os.system('cls')
                 print("input only the choices Below.")
-      
+     
 def category_display(): # ALL FUNCTION ACCOUNTED FOR
     global role_key
     category_list = ['Programming', 'Data Science', 'Engineering Guide', 'Mathematics', 'Science']
-    while True: 
+    while True:
         try:
             print("===========================================")
-            print("[1] Programming \n[2] Data Science \n[3] Engineering Guide \n[4]Mathematics \n[5] Science")
+            print("[1] Programming \n[2] Data Science \n[3] Engineering Guide \n[4] Mathematics \n[5] Science")
             category_choice = int(input("Enter your desired CATEGORY: "))
             if category_choice >= 1 and category_choice <=  len(category_list):
                 category_choice =  category_list[category_choice-1]
@@ -202,36 +203,34 @@ def category_display(): # ALL FUNCTION ACCOUNTED FOR
                         print("Category: ", books[book_key]['Category'])
                         print("Author: ", books[book_key]["author"])
                         print("ISBN: ", books[book_key]["isbn"])
-                        if books[book_key]["status"] == True:
-                            print("Status: Available")
-                        else:
-                            print("Status: Not Avaialable")
+                        print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
             else:
                 os.system('cls')
                 print("Enter only the choices below..")
         except ValueError:
-            print("Enter only form 1-5")
+            print("Enter only from 1-5")
         if role_key == 'admin':
             print("===========================================")
             print("Press ENTER to Return to the Main menu")
             input()
             os.system('cls')
-            return
+            return admin_menu()
         elif role_key != 'admin':
-            while True: 
+            while True:
                 print("===========================================")
-                admin_choice = input("[A]Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
-                if admin_choice == 'a':
+                choice = input("[A] Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
+                if choice == 'a':
                     burrow_book()
-                elif admin_choice == 'b':
+                elif choice == 'b':
                     return student_menu()
-                else: 
+                else:
                     os.system('cls')
-                    print("input only the choices Below.") 
+                    print("Input only the choices Below.")
+
 
 def search_engine(): # ALL FUNCTION ACCOUNTED FOR
     print("===========================================")
-    print("You may search by entering the book ISBN or Title of the book you're searching")
+    print("--You may search by entering the ISBN or Title of the book you're searching--")
     search_item = input("ENTER: ")
     for book_key in books:
         if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
@@ -240,10 +239,7 @@ def search_engine(): # ALL FUNCTION ACCOUNTED FOR
             print("Category: ", books[book_key]['Category'])
             print("Author: ", books[book_key]["author"])
             print("ISBN: ", books[book_key]["isbn"])
-            if books[book_key]["status"] == True:
-                print("Status: Available")
-            else:
-                print("Status: Not Avaialable")
+            print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
         else:
             print("We do not have this book..")
             print("Press Enter to continue Searching...")
@@ -256,32 +252,32 @@ def search_engine(): # ALL FUNCTION ACCOUNTED FOR
         os.system('cls')
         return
     elif role_key != 'admin':
-        while True: 
+        while True:
             print("===========================================")
-            admin_choice = input("[A]Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
-            if admin_choice == 'a':
+            choice = input("[A] Burrow Book\n[B] Return to Main Menu\nPick your action: ").lower()
+            if choice == 'a':
                 burrow_book()
-            elif admin_choice == 'b':
+            elif choice == 'b':
                 return student_menu()
-            else: 
+            else:
                 os.system('cls')
-                print("input only the choices Below.")
-    
+                print("Input only the choices Below.")
+   
 def burrow_book(): # ALL FUNCTION ACCOUNTED FOR
     global logged_in
-    while True: 
+    while True:
         print("===========================================")
-        print("please enter the ISBN or Title of the book you want to burrow")
+        print("--Enter the ISBN or Title of the book you want to burrow--")
         search_item = input("ENTER: ")
         for book_key in books:
             if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
-                if books[book_key]["status"] == True: 
+                if books[book_key]["status"] == True:
                     print("===========================================")
                     print("Title: ", book_key)
                     print("Category: ", books[book_key]['Category'])
                     print("Author: ", books[book_key]["author"])
                     print("ISBN: ", books[book_key]["isbn"])
-                    print("Status: Available")
+                    print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
                     print("===========================================")
                     confirm = input("Are you sure you want to burrow this books(Y/N)?").lower()
                     if confirm == 'y':
@@ -297,21 +293,24 @@ def burrow_book(): # ALL FUNCTION ACCOUNTED FOR
                         os.system('cls')
                         return student_menu()
                     else:
-                        print("something went wrong")
+                        print("It’s a Yes or No Question(Y/N)")
                 else:
-                    print("the book is currently not Available")
+                    print("The book is currently not Available")
+
 
 def return_book(): # ALL FUNCTION ACCOUNTED FOR
     global logged_in
-    while True: 
+    while True:
         print("===========================================")
         print(accounts[logged_in]['books_burrowed'])
-        print("please enter the 'Title' of the book you want to Return")
+        print("--Enter the 'Title' of the book you want to Return--")
         search_item = input("ENTER: ")
         if search_item in accounts[logged_in]['books_burrowed']:
-            choice = input(f"Are you sure you want to return{search_item}(Y/N): ").lower()
+            choice = input(f"Are you sure you want to return {search_item} (Y/N): ").lower()
             if choice == 'y':
                 accounts[logged_in]['books_burrowed'].remove(search_item)
+                if len(accounts[logged_in]['books_burrowed']) == 0:
+                    accounts[logged_in]['books_burrowed'] = None
                 books[search_item]['status'] = True
                 print(accounts[logged_in]['books_burrowed'])
                 print(f"{search_item} Successfully Returned..")
@@ -323,14 +322,15 @@ def return_book(): # ALL FUNCTION ACCOUNTED FOR
                 os.system('cls')
                 student_menu()
             else:
-                print("something went wrong")
+                print("It’s a Yes or No Question(Y/N)")
         else:
-            print("The book wasnt in your burrowed list")
+            print("The book is not in your burrowed list")
+
 
 def edit_books(): # ALL FUNCTION ACCOUNTED FOR
     book_parts = ['Category', 'author', 'isbn']
     print("===========================================")
-    print("Enter the ISBN or Title of the Book you wan to Edit")
+    print("Enter the ISBN or Title of the Book you want to Edit")
     search_item = input("ENTER: ")
     for book_key in books:
         if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
@@ -339,13 +339,10 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
             print("Category: ", books[book_key]['Category'])
             print("Author: ", books[book_key]["author"])
             print("ISBN: ", books[book_key]["isbn"])
-            if books[book_key]["status"] == True:
-                print("Status: Available")
-            else:
-                print("Status: Not Avaialable")
+            print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
             try:
                 print("===========================================")
-                print("[1]Category\n[2]Author\n[3]ISBN")
+                print("[1] Category\n[2] Author\n[3] ISBN")
                 edit_item = int(input("Enter the part the you want to edit on this book: "))
                 if edit_item >= 1 and edit_item <= 3:
                     edit_item -=1
@@ -364,7 +361,7 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
                 if books[book_key]["status"] == True:
                     print("Status: Available")
                 else:
-                    print("Status: Not Avaialable")
+                    print("Status: Not Available")
                 print("Press ENTER to return..")
                 input()
                 os.system('cls')
@@ -373,7 +370,8 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
                 os.system('cls')
                 admin_menu()
             else:
-                print("something went wrong")
+                print("It’s a Yes or No Question(Y/N)")
+
 
 def add_book(): # ALL FUNCTION ACCOUNTED FOR
     print("===========================================")
@@ -386,7 +384,7 @@ def add_book(): # ALL FUNCTION ACCOUNTED FOR
     print("Author: ", author)
     print("ISBN: ", isbn)
     print("===========================================")
-    confirm = input("Are all infomration correct(Y/N): ").lower()
+    confirm = input("Are all information correct(Y/N): ").lower()
     if confirm == 'y':
         books.update({title:{'Category': category, 'author': author, 'isbn': isbn, 'status': True }})
         print("Book successfully added..")
@@ -397,11 +395,12 @@ def add_book(): # ALL FUNCTION ACCOUNTED FOR
     elif confirm == 'n':
         admin_menu()
     else:
-        print("something went wrong")
+        print("It’s a Yes or No Question(Y/N)")
+
 
 def delete_book(): # ALL FUNCTION ACCOUNTED FOR
     print("===========================================")
-    print("Enter the ISBN or Title of the Book you wan to Remove")
+    print("Enter the ISBN or Title of the Book you want to Remove")
     search_item = input("ENTER: ")
     for book_key in books:
         if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
@@ -413,9 +412,9 @@ def delete_book(): # ALL FUNCTION ACCOUNTED FOR
             if books[book_key]["status"] == True:
                 print("Status: Available")
             else:
-                print("Status: Not Avaialable")
+                print("Status: Not Available")
         print("===========================================")
-        confirm = input("Are you sure you want to Remove this books(Y/N)?").lower()
+        confirm = input(f"Are you sure you want to Remove {book_key}(Y/N)?").lower()
         if confirm == 'y':
             del books[book_key]
             print("The book has been removed from our library")
@@ -427,6 +426,6 @@ def delete_book(): # ALL FUNCTION ACCOUNTED FOR
             os.system('cls')
             admin_menu()
         else:
-            print("something went wrong")
-            
-        
+            print("It’s a Yes or No Question(Y/N)")
+
+role()
