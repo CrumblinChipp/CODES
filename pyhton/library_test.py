@@ -24,7 +24,6 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
 logged_in = None
 role_key = None
 
-
 def role(): # ALL FUNCTION ACCOUNTED FOR
     global logged_in, role_key
     while True:
@@ -243,6 +242,7 @@ def search_engine(): # ALL FUNCTION ACCOUNTED FOR
         else:
             print("We do not have this book..")
             print("Press Enter to continue Searching...")
+            input()
             os.system('cls')
             search_engine()
     if role_key == 'admin':
@@ -348,7 +348,7 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
                     edit_item -=1
                     edit_item = book_parts[edit_item]
                     change_item = input(f"Enter the new {edit_item}: ")
-            except ValueError:
+            except Exception:
                 print("Enter only from 1-3")
             confirm = input("Are you sure you want to edit this books(Y/N)?").lower()
             if confirm == 'y':
@@ -358,10 +358,8 @@ def edit_books(): # ALL FUNCTION ACCOUNTED FOR
                 print("Category: ", books[book_key]['Category'])
                 print("Author: ", books[book_key]["author"])
                 print("ISBN: ", books[book_key]["isbn"])
-                if books[book_key]["status"] == True:
-                    print("Status: Available")
-                else:
-                    print("Status: Not Available")
+                print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
+                print("===========================================")
                 print("Press ENTER to return..")
                 input()
                 os.system('cls')
