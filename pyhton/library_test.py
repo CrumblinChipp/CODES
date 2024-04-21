@@ -1,3 +1,4 @@
+
 import msvcrt, sys, os
 
 accounts = {'librarian': {'password': 'librarian_admin','role': 'admin', 'books_burrowed': []},
@@ -22,7 +23,7 @@ books = {"Python Programming": {'Category':"Programming", 'author':"John Doe", '
 
 logged_in = None
 role_key = None
-
+browse_choice = None
 def hidden_input(prompt):
     sys.stdout.write(prompt)
     sys.stdout.flush()
@@ -134,79 +135,60 @@ def secondary_menu():
                 print("input only the choices Below.")
 
 def browse_menu(): # ALL FUNCTION ACCOUNTED FOR
+    global browse_choice
     while True:
         print("===========================================")
         print("[A] Display All Books\n[B] Browse by Category\n[C] Search ")
         browse_choice = input("Enter your action(leave blank to return to the Main Menu): ").lower()
         if browse_choice == "":
             return
-        elif browse_choice == 'a':
+        elif browse_choice == 'a' or browse_choice == 'b' or browse_choice == 'c':
             os.system('cls')
-            display_all()
-        elif browse_choice == 'b':
-            os.system('cls')
-            category_display()
-        elif browse_choice == 'c':
-            os.system('cls')
-            search_engine()
+            display()
         else:
             print("Enter only on the choices below")
        
-def display_all(): # ALL FUNCTION ACCOUNTED FOR
-    global role_key
-    book_title = list(books.keys())
-    for title in book_title:
-        print("===========================================")
-        print("Title: ", title)
-        print("Category: ", books[title]["Category"])
-        print("Author: ", books[title]["author"])
-        print("ISBN: ", books[title]["isbn"])
-        print ("Status: Available" if books[title]["status"] == True else "Status: Not Available")
-    secondary_menu()
-     
-def category_display(): # ALL FUNCTION ACCOUNTED FOR
-    global role_key
-    category_list = ['Programming', 'Data Science', 'Engineering Guide', 'Mathematics', 'Science']
-    while True:
-        try:
-            print("===========================================")
-            print("[1] Programming \n[2] Data Science \n[3] Engineering Guide \n[4] Mathematics \n[5] Science")
-            category_choice = int(input("Enter your desired CATEGORY: "))
-            if category_choice >= 1 and category_choice <=  len(category_list):
-                category_choice =  category_list[category_choice-1]
-                for book_key in books:
-                    if books[book_key]['Category'] == category_choice:
-                        print("===========================================")
-                        print("Title: ", book_key)
-                        print("Category: ", books[book_key]['Category'])
-                        print("Author: ", books[book_key]["author"])
-                        print("ISBN: ", books[book_key]["isbn"])
-                        print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
-            else:
-                os.system('cls')
-                print("Enter only the choices below..")
-        except Exception:
-            print("Enter only from 1-5")
-        secondary_menu()
+def display(): # ALL FUNCTION ACCOUNTED FOR
+    global role_key, browse_choice
 
-def search_engine(): # ALL FUNCTION ACCOUNTED FOR
-    print("===========================================")
-    print("--You may search by entering the ISBN or Title of the book you're searching--")
-    search_item = input("ENTER: ")
     for book_key in books:
-        if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
+        if browse_choice == 'a':
+            pass
+        elif browse_choice == 'b':
+                category_list = ['Programming', 'Data Science', 'Engineering Guide', 'Mathematics', 'Science']
+                while True:
+                    try:
+                        print("===========================================")
+                        print("[1] Programming \n[2] Data Science \n[3] Engineering Guide \n[4] Mathematics \n[5] Science")
+                        category_choice = int(input("Enter your desired CATEGORY: "))
+                        if category_choice >= 1 and category_choice <=  len(category_list):
+                            category_choice =  category_list[category_choice-1]
+                            if books[book_key]['Category'] == category_choice:
+                                pass
+                            else:
+                                os.system('cls')
+                                print("Enter only the choices below..")
+                    except Exception:
+                        print("Enter only from 1-5")              
+
+        elif browse_choice == 'c':
             print("===========================================")
-            print("Title: ", book_key)
-            print("Category: ", books[book_key]['Category'])
-            print("Author: ", books[book_key]["author"])
-            print("ISBN: ", books[book_key]["isbn"])
-            print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
-        else:
-            print("We do not have this book..")
-            print("Press Enter to continue Searching...")
-            input()
-            os.system('cls')
-            search_engine()
+            print("--You may search by entering the ISBN or Title of the book you're searching--")
+            search_item = input("ENTER: ")
+            if books[book_key]['isbn'] == search_item or book_key.lower() == search_item:
+                pass
+            else:
+                print("We do not have this book..")
+                print("Press Enter to continue Searching...")
+                input()
+                os.system('cls')
+                return
+        print("===========================================")
+        print("Title: ", book_key)
+        print("Category: ", books[book_key]['Category'])
+        print("Author: ", books[book_key]["author"])
+        print("ISBN: ", books[book_key]["isbn"])
+        print ("Status: Available" if books[book_key]["status"] == True else "Status: Not Available")
     secondary_menu()
    
 def burrow_book(): # ALL FUNCTION ACCOUNTED FOR
@@ -368,4 +350,4 @@ def delete_book(): # ALL FUNCTION ACCOUNTED FOR
         else:
             print("It’s a Yes or No Question(Y/N)")
 
-role()
+browse_menu()
