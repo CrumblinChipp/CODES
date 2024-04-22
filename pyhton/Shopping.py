@@ -22,17 +22,14 @@ def buy():
                 i += 1
             print("========================")
             shopping = int(input("what item would you like to buy: "))
-            shopping -= 1
-            shopping = grocery_keys[shopping]
+            shopping = grocery_keys[shopping-1]
             if grocery[shopping][2] == False:
                 print("This item is not available")
-                print("Press any key to coninue..")
+                print("Press ENTER to coninue..")
                 input()
                 i=1
                 os.system('cls')
             else: 
-                print("This item is available")
-                
                 while True:
                     print("===========================")
                     print(f"cart = [{shopping}]")
@@ -54,7 +51,7 @@ def buy():
                         print("Press any key to coninue..")
                         input()
                         os.system('cls')
-        except ValueError:
+        except Exception:
             print("Please pick only from the given numbers..")
             print("Press any key to coninue..")
             input()
@@ -67,6 +64,5 @@ def buy():
                 input()
                 i=1
                 os.system('cls')
-
 
 buy()

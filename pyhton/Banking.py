@@ -9,7 +9,6 @@ accounts = {
     "marcelo": ['russell', 10]
 }
 
-
 def sign_up():
     global global_username
     while True:
