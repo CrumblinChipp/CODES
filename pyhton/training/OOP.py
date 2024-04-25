@@ -26,3 +26,4 @@ item2 = Item("Laptop", 1000, 3)
 item2.pay_rate = 0.7
 item2.appy_discount()
 print(item2.price)
+print("lols")
