@@ -187,7 +187,31 @@ def return_game():
             break
         except ValueError:
             print("Wrong input")
-
+            
+def add_game():
+    while True:
+        try:
+            title = input("Enter Game Title: ")
+            price = int(input("Enter Game Price: "))
+            quantity = int(input("Enter Game Quanity: "))
+        except Exception:
+            print("Something wrong. PLease try again...")
+        print(f"Title: {title}")
+        print(f"Price: {price}")
+        print(f"Quantity: {quantity}")
+        print("Are all information correct(Y/N)?")
+        confirm = input().lower()
+        if confirm =='y':
+            games.update({title:{'price': price, 'copy': quantity}})
+            print("Game succesfully added.")
+            print("Press ENTER to continue ")
+            input()
+            os.system('cls')
+            return
+        if confirm == 'n':
+            print("Exiting..")
+            return
+    
 def main_menu():
     global logged_in, wallet
     print("===========================")    
@@ -207,7 +231,8 @@ def main_menu():
                 os.system('cls')
                 return_game()
             elif main_choice ==3:
-                print("not yet done")#---------------------------------------------------------------------------
+                os.system('cls')
+                add_game()
             elif main_choice == 4:
                 os.system('cls')
                 logged_in = None
@@ -223,4 +248,3 @@ def main_menu():
             print("Please enter 1-3 only")
    
 entry_menu()
-
